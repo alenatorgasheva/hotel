@@ -5,20 +5,19 @@
 #              Zemtseva A.       (%),
 #              Torgasheva A.     (%).
 
-import client
-import room
-
-
-def max_price(room_prices):
-    for i in range(len(room_prices)):
-        for j in range(i, len(room_prices) - 1):
-            if room_prices[j][0] < room_prices[j + 1][0]:
-                room_prices[j], room_prices[j + 1] = room_prices[j + 1], room_prices[j]
-    return room_prices
+from client import Client
+from room import Room
 
 
 def main():
-    pass
+    client = Client()
+    lst_rooms = []  # Здесь должна быть копия экземпляров
+    min_capacity = Room.min_capacity(lst_rooms)
+    rooms_w_price = Room.lst_room_price(lst_rooms, min_capacity)  # список (1)
+    client.calc_new_price(rooms_w_price, min_capacity)
+    # выбрали комнату
+    chosen_room = Room.max_price(rooms_w_price)[1]
+    price_chosen_room = Room.max_price(rooms_w_price)[0]
 
 
 main()

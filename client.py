@@ -1,3 +1,4 @@
+from room import Room
 class Client:
     def __init__(self, last_name, first_name, patronymic,
                  capacity, money, start_date, count_days):
@@ -44,3 +45,17 @@ class Client:
             needed_dates.add(str(day + '.' + month + '.' + year))
 
         return needed_dates
+
+    def calc_new_price(self, lst_rooms, min_capacity):
+        """функция выполняет пятую задачу, lst_rooms - список(1)
+        client -экземпляр класса клиент"""
+        if self.capacity < min_capacity:
+            for room in lst_rooms:
+                room[0] = room[0] * 0.7
+        for room in lst_rooms:
+            if room[0] + Room.breakfast <= self.money:
+                if room[0] + Room.half_board <= self.money:
+                    room[0] = room[0] + Room.half_board
+                else:
+                    room[0] = room[0] + Room.breakfast
+        # ничего не возвращаем, список (1) изменился(цены пересчитаны)
