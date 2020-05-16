@@ -2,20 +2,27 @@ class Room:
     """"""
     breakfast = 280.0
     half_board = 1000.0
-    def __init__(self):
-        pass
+
+    type_of_room = {'одноместный': 2900, 'двухместный': 2300, 'полулюкс': 3200, 'люкс': 4100}
+    comfort_degree = {'стандарт': 1, 'стандарт_улучшенный': 1.2, 'апартамент': 1.5}
+
+    def __init__(self, number, type, max_capacity, comfort, booked_date=''):
+        self.number = number
+        self.type = type
+        self.max_capacity = max_capacity
+        self.comfort = comfort
+        self.booked_date = booked_date
+        self.price = Room.type_of_room[self.type] * Room.comfort_degree[self.comfort]
 
     def __str__(self):
-        pass
+        return '{} {} {} {}'.format(self.number, self.type, self.max_capacity, self.comfort)
 
     def __repr__(self):
-        pass
+        return self.__str__()
 
     def isfreeroom(self):
         pass
 
-    def countprice(self):
-        pass
 
     @staticmethod
     def max_price(room_prices):
