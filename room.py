@@ -1,5 +1,7 @@
+import client
+
 class Room:
-    """ ? """
+    """ Класс номеров отеля """
     breakfast = 280.0
     half_board = 1000.0
 
@@ -15,6 +17,13 @@ class Room:
         self.booked_date = set()
         self.price = Room.type_of_room[self.type] * Room.comfort_degree[self.comfort]
 
+    def needed_dates(self, ):
+        """Метод определения свободна ли комната"""
+        if client.dates() & self.booked_date == 0:
+            return True
+        else:
+            return False
+
     def __str__(self):
         """Метод строкового представления"""
         return '{} {} {} {}'.format(self.number, self.type, self.max_capacity, self.comfort)
@@ -23,9 +32,7 @@ class Room:
         """Метод представления"""
         return self.__str__()
 
-    def isfreeroom(self):
-        """ ? """
-        pass
+
 
     @staticmethod
     def max_price(room_prices):

@@ -9,26 +9,27 @@ from client import Client
 from room import Room
 import codecs
 import copy
+import random
 
 
 def main():
-# 1
+    total_income = 0
+    # 1
     list_of_rooms = []
     with codecs.open('fund.txt', 'r', encoding='utf-8') as file:
         for string in file.readlines():
             string = string.split()
             room = Room(string[0], string[1], string[2], string[3])
             list_of_rooms.append(room)  # Список экземпляров класса Room
-# 2     ERROR
+# 2
     list_of_clients = []
     with codecs.open('booking.txt', 'r', encoding='utf-8') as file:
         for string in file.readlines():
             string = string.split()
 
-# в строке ниже TypeError
-            client = Client(string[1], string[2], string[3], string[7], string[5], string[6])
+            client = Client(string[1], string[2], string[3], string[4], string[7], string[5], string[6])
             list_of_clients.append(client)  # Список экземпляров класса Client
-            lst_rooms = copy.deepcopy(list_of_rooms)  # Здесь должна быть копия экземпляров
+            lst_rooms = copy.deepcopy(list_of_rooms)
 
 # 3
             for room in list_of_rooms:
@@ -47,7 +48,21 @@ def main():
                     lst_rooms.remove(room)
                     continue
 
-    #    client = Client()
+#7
+    income = float(room.price * client.capacity * client.count_days)
+    if len(lst_rooms) != 0:
+        for _ in lst_rooms:
+            if random.random > 0.25:
+                # Клиент согласен
+                room.booked_date.add(client.dates())
+                total_income += income
+            else:
+                # Клиент сам отказался
+                total_income -= income
+    else:
+        # Отказ, тк предложений нет
+        total_income -= income
+
     min_capacity = Room.min_capacity(lst_rooms)
     rooms_w_price = Room.lst_room_price(lst_rooms, min_capacity)  # список (1)
     client.calc_new_price(rooms_w_price, min_capacity)
