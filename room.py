@@ -5,6 +5,9 @@ class Room:
     breakfast = 280.0
     half_board = 1000.0
 
+    lost_income = 0
+    income = 0
+
     type_of_room = {'одноместный': 2900, 'двухместный': 2300, 'полулюкс': 3200, 'люкс': 4100}
     comfort_degree = {'стандарт': 1, 'стандарт_улучшенный': 1.2, 'апартамент': 1.5}
 
@@ -63,3 +66,37 @@ class Room:
         return room_price
         # функция выполняет 4-ю задачу возвращает список (1)
         # [[цена комнаты, экземпляр класса комнат],[цена, экземпляр] и тд]
+
+    @staticmethod
+    def end_of_day(day, list_of_rooms):
+        room_types = {'одноместный': 0, 'двухместный': 0, 'полулюкс': 0, 'люкс': 0}
+        types_of_busy_rooms = {'одноместный': 0, 'двухместный': 0, 'полулюкс': 0,
+                               'люкс': 0}
+        busy_rooms = 0
+        free_rooms = 0
+        for room in list_of_rooms:
+            if room.isfreeroom({day}): # мне нужна фунция isfreeroom которая принимает на вход множество дат, где она??????????
+                busy_rooms += 1
+                types_of_busy_rooms[room.type] += 1
+                room_types[room.type] += 1
+            else:
+                free_rooms += 1
+                room_types[room.type] += 1
+
+        print('=' * 120)
+        print('Итог за {}'.format(day))
+        print('Количество занятых номеров: {}'.format(busy_rooms))
+        print('Количество свободных номеров: {}'.format(free_rooms))
+        print('Занятость по категориям:')
+        print('Одноместных: {} из {}'.format(types_of_busy_rooms['одноместный'],
+                                             room_types['одноместный']))
+        print('Двухместных: {} из {}'.format(types_of_busy_rooms['двухместный'],
+                                             room_types['двухместный']))
+        print('Полулюкс: {} из {}'.format(types_of_busy_rooms['полулюкс'],
+                                          room_types['полулюкс']))
+        print('Люкс: {} из {}'.format(types_of_busy_rooms['люкс'],
+                                      room_types['люкс']))
+        print('Процент загруженности гостиницы: {} %'.format(round(
+            (busy_rooms / free_rooms) * 100), 2))
+        print('Доход за день: {} руб.'.format(Room.income))
+        print('Упущенный доход: {} руб.'.format(Room.lost_income))
