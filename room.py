@@ -1,5 +1,6 @@
 import client
 
+
 class Room:
     """ Класс номеров отеля """
     breakfast = 280.0
@@ -25,20 +26,18 @@ class Room:
 
     def isfreeroom(self, dates):
         """Метод определения свободна ли комната"""
-        if dates & self.booked_date == 0:
+        if dates & self.booked_date == set():
             return True
         else:
             return False
 
     def __str__(self):
         """Метод строкового представления"""
-        return '{} {} {} {}'.format(self.number, self.type, self.max_capacity, self.comfort)
+        return 'номер {} {} {}'.format(self.number, self.type, self.comfort)
 
     def __repr__(self):
         """Метод представления"""
         return self.__str__()
-
-
 
     @staticmethod
     def max_price(room_prices):
@@ -72,13 +71,17 @@ class Room:
 
     @staticmethod
     def end_of_day(day, list_of_rooms):
+        today = set()
+        today.add(day)
         room_types = {'одноместный': 0, 'двухместный': 0, 'полулюкс': 0, 'люкс': 0}
         types_of_busy_rooms = {'одноместный': 0, 'двухместный': 0, 'полулюкс': 0,
                                'люкс': 0}
         busy_rooms = 0
         free_rooms = 0
         for room in list_of_rooms:
-            if room.isfreeroom({day}): # мне нужна фунция isfreeroom которая принимает на вход множество дат, где она??????????
+            if not room.isfreeroom(today):
+                # мне нужна фунция isfreeroom которая принимает на вход множество дат, где она??????????
+
                 busy_rooms += 1
                 types_of_busy_rooms[room.type] += 1
                 room_types[room.type] += 1
@@ -100,6 +103,28 @@ class Room:
         print('Люкс: {} из {}'.format(types_of_busy_rooms['люкс'],
                                       room_types['люкс']))
         print('Процент загруженности гостиницы: {} %'.format(round(
-            (busy_rooms / free_rooms) * 100), 2))
+            (busy_rooms / (busy_rooms + free_rooms)) * 100), 2))
         print('Доход за день: {} руб.'.format(Room.income))
         print('Упущенный доход: {} руб.'.format(Room.lost_income))
+
+    def booking_result(self, result, string, client, price_chosen_room):
+        if price_chosen_room == self.price or self.price * 0.7:
+            conditionals = 'без питания'
+        elif price_chosen_room == self.price + 1000 or self.price * 0.7 + 1000:
+            conditionals = 'полупансион'
+        else:
+            conditionals = 'завтрак'
+        print('-' * 120)
+        print('Поступила заявка на бронирование:')
+        print(' '.join(string))
+        if result == 0:
+            print('Предложений по данному запросу нет. В бронировании отказано.')
+            return
+        print('Найден:')
+        print('{} раcсчитан на {} чел. фактически {} чел. {} стоимость {} '
+              'руб./сутки'.format(self, self.max_capacity, client.capacity,
+                                  conditionals, price_chosen_room))
+        if result:
+            print('Клиент согласен. Номер забронирован.')
+        else:
+            print('Клиент отказался от варианта.')
