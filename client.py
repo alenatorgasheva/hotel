@@ -10,10 +10,23 @@ class Client:
         self.last_name = last_name
         self.first_name = first_name
         self.middle_name = middle_name
-        self.capacity = capacity
-        self.money = money
+
+        if isinstance(capacity, str):
+            self.capacity = int(capacity)
+        else:
+            self.capacity = capacity
+
+        if isinstance(money, str):
+            self.money = int(money)
+        else:
+            self.money = money
+
         self.start_date = start_date
-        self.count_days = count_days
+
+        if isinstance(count_days, str):
+            self.count_days = int(count_days)
+        else:
+            self.count_days = count_days
 
     def __str__(self):
         """Метод строкового представления"""

@@ -33,7 +33,7 @@ def main():
             # 3
             for room in list_of_rooms:
                 # Проверка дат
-                if client.dates() & room.booked_date != 0:
+                if room.isfreeroom(client.dates()):
                     lst_rooms.remove(room)
                     continue
 

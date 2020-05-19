@@ -15,14 +15,17 @@ class Room:
         """Метод инициализации"""
         self.number = number
         self.type = type
-        self.max_capacity = max_capacity
+        if isinstance(max_capacity, str):
+            self.max_capacity = int(max_capacity)
+        else:
+            self.max_capacity = max_capacity
         self.comfort = comfort
         self.booked_date = set()
         self.price = Room.type_of_room[self.type] * Room.comfort_degree[self.comfort]
 
-    def needed_dates(self, ):
+    def isfreeroom(self, dates):
         """Метод определения свободна ли комната"""
-        if client.dates() & self.booked_date == 0:
+        if dates & self.booked_date == 0:
             return True
         else:
             return False
