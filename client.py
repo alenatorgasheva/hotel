@@ -2,11 +2,11 @@ from room import Room
 
 
 class Client:
-    """Класс клиентов отеля"""
+    """Class of hotel's client"""
 
     def __init__(self, last_name, first_name, middle_name,
                  capacity, money, start_date, count_days):
-        """Метод инициализации"""
+        """Method of initialization."""
         self.last_name = last_name
         self.first_name = first_name
         self.middle_name = middle_name
@@ -29,7 +29,7 @@ class Client:
             self.count_days = count_days
 
     def __str__(self):
-        """Метод строкового представления"""
+        """Method of string representation."""
         s = self.last_name + ' '
         s += self.first_name + ' '
         s += self.middle_name + ' '
@@ -40,11 +40,11 @@ class Client:
         return s
 
     def __repr__(self):
-        """Метод представления"""
+        """Method of representation."""
         return self.__str__()
 
     def dates(self):
-        """Метод получения множества дат, которые хочет забронировать клиент"""
+        """Method of getting dates to book."""
         days_in_month = {'01': 31, '02': 28, '03': 31, '04': 30,
                          '05': 31, '06': 30, '07': 31, '08': 31,
                          '09': 30, '10': 31, '11': 30, '12': 31}
@@ -68,8 +68,7 @@ class Client:
         return needed_dates
 
     def calc_new_price(self, lst_rooms, min_capacity):
-        """Метод выполняет пятую задачу, lst_rooms - список(1)
-        client -экземпляр класса клиент"""
+        """Method of calculating the most expensive kind of room reservation."""
         if self.capacity < min_capacity:
             for room in lst_rooms:
                 room[0] = room[0] * 0.7
@@ -79,4 +78,3 @@ class Client:
                     room[0] = room[0] + Room.half_board
                 else:
                     room[0] = room[0] + Room.breakfast
-        # ничего не возвращаем, список (1) изменился(цены пересчитаны)
