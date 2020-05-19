@@ -2,7 +2,7 @@
 # This program makes hotel room reservations.
 
 # Developers : Daniel A.         (%),
-#              Zemtseva A.       (%),
+#              Zemtseva A.       (27%),
 #              Torgasheva A.     (30%).
 
 from client import Client
