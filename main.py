@@ -1,7 +1,7 @@
 # Case - study
 # This program makes hotel room reservations.
 
-# Developers : Daniel A.         (%),
+# Developers : Daniel A.         (35%),
 #              Zemtseva A.       (27%),
 #              Torgasheva A.     (30%).
 
